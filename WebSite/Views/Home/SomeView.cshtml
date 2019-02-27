@@ -1,0 +1,209 @@
+﻿@using Microsoft.AspNet.Identity;
+
+@{
+    ViewBag.Title = "My room";
+}
+
+<h2>My room</h2>
+
+@*<ul class="nav nav-pills">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#">Menu 1</a></li>
+        <li><a href="#">Menu 2</a></li>
+        <li><a href="#">Menu 3</a></li>
+    </ul>*@
+
+@*@Html.Label(User.Identity.GetUserId());*@
+
+<ul class="nav nav-tabs">
+    <li class="active">@Html.ActionLink("My car", "MyRoom", "Home")</li>
+    <li>@Html.ActionLink("Mileage and fueling", "Mileage", "Home")</li>
+    <li>@Html.ActionLink("Liquids", "Oils", "Home")</li>
+    <li>@Html.ActionLink("Errors", "Errors", "Home")</li>
+    <li>@Html.ActionLink("Location", "FindVehicle", "Home")</li>
+</ul>
+<br />
+
+@if (ViewBag.Message == "AlreadyHasCar")
+{
+    <div class="alert alert-danger">
+        <strong>Car doesn't added!</strong>
+        You already added car.
+    </div>
+}
+
+@if (ViewBag.Message == "Liquid")
+{
+    <div class="alert alert-success">
+        <strong>Information about replacing fluid is added!</strong>
+        To see the statistics go to the "Liquids" tab.
+    </div>
+}
+
+@if (ViewBag.Message == "Fuel")
+{
+    <div class="alert alert-success">
+        <strong>The information about filling has been added!</strong>
+        To see the statistics, go to the "Mileage and fueling" tab.
+    </div>
+}
+
+
+@if (ViewBag.Message == "Float")
+{
+    <div class="alert alert-danger">
+        <strong>Information is not added!</strong>
+        You entered incorrect data.
+    </div>
+}
+
+@if (ViewBag.Message == "IncorrectMileage")
+{
+    <div class="alert alert-danger">
+        <strong>Information is not added!</strong>
+        You entered incorrect mileage.
+    </div>
+}
+
+@if (ViewBag.Message == "IncorrectAmount")
+{
+    <div class="alert alert-danger">
+        <strong>Information is not added!</strong>
+        You entered incorrect amount of fuel.
+    </div>
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading" style="font-size:30px;">
+        My car: <button type="button" onclick="location.href='@Url.Action("AddCar2", "Home")';return false;" class="btn btn-primary" id="addCarBTN" style="float:right;margin-top:5px;">Add car</button>
+        @*<button type="button" onclick="location.href='@Url.Action("AddCar2", "Home")';return false;" class="btn btn-info" id="editCarBTN" style="float:right;margin-top:5px;margin-right:5px;">Редактировать автомобиль</button>*@
+        <button type="button" onclick="location.href='@Url.Action("EmulateIOT", "Home")';return false;" class="btn btn-default" id="emulateIOTBTN" style="float:right;margin-top:5px;margin-right:5px;">Emulate IOT</button>
+    </div>
+    <div class="panel-body">
+        <ul>
+            @if (ViewBag.IsUserHasCar)
+            {
+                <li>Brand:@ViewBag.Car.Brand</li>
+                <li>Model:@ViewBag.Car.Model</li>
+                <li>Year:@ViewBag.Car.Year</li>
+                <li>Engine Type:@ViewBag.Car.EngineType</li>
+                <li>Engine Amount:@ViewBag.Car.EngineAmount</li>
+                <li>Gear Box Type:@ViewBag.Car.GearBoxType</li>
+                <li>Tank Amount:@ViewBag.Car.TankAmount</li>
+                if (ViewBag.Car.IsCarHasDC)
+                {
+                    <li>Is car has DC?: <span class="label label-success">Yes</span></li>
+                }
+                else
+                {
+                    <li>Is car has DC?: <span class="label label-danger">No</span></li>
+                }
+            }
+            else
+            {
+                <li>Brand:</li>
+                <li>Model:</li>
+                <li>Year</li>
+                <li>Engine Type:</li>
+                <li>Engine Amount:</li>
+                <li>Gear Box Type:</li>
+                <li>Tank Amount:</li>
+                <li>Is car has DC?:</li>
+            }
+        </ul>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-4 panel panel-default" style="padding: 0px;">
+            <div class="panel-heading" style="font-size:25px; text-align:center;">
+                Add information about fueling
+            </div>
+            <div class="panel-body">
+                <form role="form" name="addMileage" method="post" action="/Home/AddMileage">
+                    <div class="form-group" title="Enter an integer or real value in the format '11, 2 '">
+                        <label for="name">Current mileage: <span class="glyphicon glyphicon-question-sign"></span></label>
+                        <input name="Mileage" type="text" class="form-control" id="mileage"
+                               required>
+                    </div>
+                    <div class="form-group" title="Enter an integer">
+                        <label for="name">Number of liters in the tank: <span class="glyphicon glyphicon-question-sign"></span></label>
+                        <input name="FuelInTank" type="text" class="form-control" id="gas_amount_tank"
+                               required>
+                    </div>
+                    <div class="form-group" title="Enter an integer">
+                        <label for="name">Number of liters: <span class="glyphicon glyphicon-question-sign"></span></label>
+                        <input name="FuelAmount" type="text" class="form-control" id="gas_amount"
+                               required>
+                    </div>
+                    <div class="form-group" title="Enter an integer or real value in the format '11, 2 '">
+                        <label for="name">Price: <span class="glyphicon glyphicon-question-sign"></span></label>
+                        <input name="Price" type="text" class="form-control" id="price"
+                               required>
+                    </div>
+                    @*<div class="checkbox">
+                            <label>
+                                <input type="checkbox"> Check me out
+                            </label>
+                        </div>*@
+                    <button type="submit" id="addFuelBTN" class="btn btn-primary">Add</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-offset-2 col-md-4 panel panel-default" style="padding: 0px;">
+            <div class="panel-heading" style="font-size: 25px; text-align: center;">
+                Add information about fluid replacement
+            </div>
+            <div class="panel-body">
+                <form role="form" method="post" action="/Home/AddLiquid">
+                    <div class="form-group">
+                        <label for="name">Liquid type:</label>
+                        <select class="form-control" name="LiquidType">
+                            <option selected>Oil</option>
+                            <option>Antifreeze</option>
+                            <option>Window washer</option>
+                        </select>
+                    </div>
+                    <div class="form-group" title="Enter an integer or real value in the format '11, 2 '">
+                        <label for="name">Current mileage: <span class="glyphicon glyphicon-question-sign"></span></label>
+                        <input type="text" class="form-control" name="Mileage" id="mileage"
+                               required>
+                    </div>
+                    <div class="form-group" title="Enter an integer or real value in the format '11, 2 '">
+                        <label for="name">Number of liters: <span class="glyphicon glyphicon-question-sign"></span></label>
+                        <input type="text" class="form-control" name="LiquidAmount" id="name"
+                               required>
+                    </div>
+                    @*<div class="form-group">
+                            <label for="name">Стоимость:</label>
+                            <input type="text" class="form-control" id="price"
+                                   placeholder="Введите стоимость">
+                        </div>*@
+                    <button type="submit" id="addOilBTN" class="btn btn-primary">Add</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (!ViewBag.IsUserHasCar)
+{
+    <script type="text/javascript">
+        document.getElementById('addCarBTN').disabled = false;
+        //document.getElementById('editCarBTN').disabled = true;
+        document.getElementById('addFuelBTN').disabled = true;
+        document.getElementById('addOilBTN').disabled = true;
+        document.getElementById('emulateIOTBTN').disabled = true;
+    </script>
+}
+else
+{
+    <script type="text/javascript">
+        document.getElementById('addCarBTN').disabled = true;
+        //document.getElementById('editCarBTN').disabled = false;
+        document.getElementById('addFuelBTN').disabled = false;
+        document.getElementById('addOilBTN').disabled = false;
+        document.getElementById('emulateIOTBTN').disabled = false;
+    </script>
+}

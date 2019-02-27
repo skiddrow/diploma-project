@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "Liquids";
+}
+
+<h2>Liquids</h2>
+
+<ul class="nav nav-tabs">
+    <li>@Html.ActionLink("My car", "MyRoom", "Home")</li>
+    <li>@Html.ActionLink("Mileage and fueling", "Mileage", "Home")</li>
+    <li class="active">@Html.ActionLink("Liquids", "Oils", "Home")</li>
+    <li>@Html.ActionLink("Errors", "Errors", "Home")</li>
+    <li>@Html.ActionLink("Location", "FindVehicle", "Home")</li>
+</ul>
+
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th style="width: 25%;">Date</th>
+                <th style="width: 25%;">Liquid type</th>
+                <th style="width: 25%;">Mileage (km)</th>
+                <th style="width: 25%;">Number of liters</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var i in ViewBag.Oils)
+            {
+                <tr>
+                    <td>@i.Date.ToShortDateString()</td>
+                    <td>@i.LiquidType.Name</td>
+                    <td>@i.Mileage</td>
+                    <td>@i.LiquidAmount</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

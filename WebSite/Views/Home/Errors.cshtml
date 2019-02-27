@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "Errors";
+}
+
+<h2>Errors</h2>
+
+<ul class="nav nav-tabs">
+    <li>@Html.ActionLink("My car", "MyRoom", "Home")</li>
+    <li>@Html.ActionLink("Mileage and fueling", "Mileage", "Home")</li>
+    <li>@Html.ActionLink("Liquids", "Oils", "Home")</li>
+    <li class="active">@Html.ActionLink("Errors", "Errors", "Home")</li>
+    <li>@Html.ActionLink("Location", "FindVehicle", "Home")</li>
+</ul>
+
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th style="width: 25%;">Date</th>
+                <th style="width: 25%;">Error type</th>
+                <th style="width: 25%;">Mileage (km)</th>
+                <th style="width: 25%;">Is fixed?</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var i in ViewBag.Errors)
+            {
+                <tr>
+                    <td>@i.Date.ToShortDateString()</td>
+                    <td>@i.ErrorType.Decsription</td>
+                    <td>@i.Mileage</td>
+                    @if (i.IsFixed)
+                    {
+                        <td><span class="label label-success">Yes</span></td>
+                    }
+                    else
+                    {
+                        <td><span class="label label-danger">No</span></td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+

@@ -1,0 +1,76 @@
+﻿@using Microsoft.AspNet.Identity;
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Car Assistant</h1>
+    <p class="lead">Our service will allow you to conveniently monitor the status of your car, as well as all costs associated with it.</p>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <button class="btn btn-primary btn-large" onclick="location.href='@Url.Action("MyRoom", "Home")';return false;">
+            Get to work
+        </button>
+        @*<p class="btn btn-primary btn-large" style="text-decoration-color:white;">@Html.ActionLink("Приступить к работе", "MyRoom", "Home", new { UserId = User.Identity.GetUserId().ToString() }, null) &raquo;</p>*@
+    }
+    else
+    {
+        <button class="btn btn-primary btn-large" onclick="location.href='@Url.Action("Login", "Account")';return false;">Log in</button>
+        @*@Html.ActionLink("Авторизироватся", "Login", "Account")*@
+    }
+
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2 style="text-align:center;">Accounting for fuel costs</h2>
+        <div style="text-align:center;">
+            <img src="~/Content/gas.png" width="250px" style="text-align:center">
+        </div>
+        <p>
+            You can always monitor the real fuel consumption, for any length of time, to track statistics.
+        </p>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <button class="btn btn-default btn-large" onclick="location.href='@Url.Action("MyRoom", "Home")';return false;">Proceed &raquo;</button>
+        }
+        else
+        {
+            <button class="btn btn-default btn-large" onclick="location.href='@Url.Action("Login", "Account")';return false;">Proceed &raquo;</button>
+        }
+    </div>
+    <div class="col-md-4">
+        <h2 style="text-align:center;">Oil Change Check</h2>
+        <div style="text-align:center;">
+            <img src="~/Content/oil.svg" width="250px" style="text-align:center">
+        </div>
+        <p>The service allows you not to worry about the replacement of oil and other liquids, it will remind you when and what you need to replace.</p>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <button class="btn btn-default btn-large" onclick="location.href='@Url.Action("MyRoom", "Home")';return false;">Proceed &raquo;</button>
+        }
+        else
+        {
+            <button class="btn btn-default btn-large" onclick="location.href='@Url.Action("Login", "Account")';return false;">Proceed &raquo;</button>
+        }
+    </div>
+    <div class="col-md-4">
+        <h2 style="text-align:center;">Troubleshooting</h2>
+        <div style="text-align:center;">
+            <img src="~/Content/service.png" width="250px" style="text-align:center">
+        </div>
+        <p>To diagnose any malfunction you no longer need to go to a specialized service station, now you can do it with our service.</p>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <button class="btn btn-default btn-large" onclick="location.href='@Url.Action("MyRoom", "Home")';return false;">Proceed &raquo;</button>
+        }
+        else
+        {
+            <button class="btn btn-default btn-large" onclick="location.href='@Url.Action("Login", "Account")';return false;">Proceed &raquo;</button>
+        }
+    </div>
+</div>
+@*<div class="col-md-12">
+        <h2 style="text-align:center;">А также множество других функций!</h2>
+    </div>*@
